@@ -14,7 +14,7 @@ R: Bom, primeiramente discutiria abertamente o nivel de  importância desse novo
 
 3 - Considere que você acabou de concluir e liberar uma nova funcionalidade para produção, em pouco tempo os usuários começam a reportar problemas na mesma e você é acionado para avaliar e resolver o problema. Na sua opinião, quais seriam as ações a serem realizadas do momento em que o problema chegou ao seu conhecimento até a correção dele?
 
-R:
+R: Primeiramente o importante é ouvir atentamente o erro descrito pelo usuário, se for possivel detalhar, ficaria melhor na análise. Depois de ter a informação trabalharia na correção, e desta vez incluindo testes nos casos descritos pelo usuário. Assim  haveria a garantia do bom funcionamento da funcionalidade. Durante o trabalho de correção também poderia pedir ajuda e code review para facilitar a identificação do erro, já que temos uma visão enviesada do nosso próprio código.
 
 4 - Considere que você está trabalhando em uma implementação complexa, e estratégica para viabilizar uma entrega contratual, cujo prazo não pode ser repactuado, e durante a implementação atrasos ocorreram por conta de itens que não estavam claros na especificação, levando você a estimar um atraso de um dia na entrega prevista. Quais seriam suas considerações e encaminhamento nesse cenário?
 
