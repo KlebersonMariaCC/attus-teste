@@ -10,7 +10,7 @@ R: Bom, primeiramente eu comunicaria o estado atual do artefato, citando ao atra
 
 2 - Considere que você está trabalhando há dias em uma implementação complexa, e pelo estágio da implementação o prazo acordado será cumprido, mas seu líder imediato solicita que você atue em uma implementação emergencial, que não havia sido identificada na etapa de levantamentos, e deve ser entregue no dia seguinte. Quais seriam suas considerações e encaminhamento nesse cenário?
 
-R:
+R: Bom, primeiramente discutiria abertamente o nivel de  importância desse novo projeto e o impacto disso no projeto atual, já que provavelmente acarretaria atrasos. Ele estando ciênte disso e mesmo assim prosseguir a solicitação, seguirei o comando da liderança onde caso seja perguntado direi que estou seguindo o recomendado pelo lider. E claro na medida em que o tempo fosse me permitindo também trabalharia no projeto original, mas em ma prioridade mais baixa do que a que pede urgência.
 
 3 - Considere que você acabou de concluir e liberar uma nova funcionalidade para produção, em pouco tempo os usuários começam a reportar problemas na mesma e você é acionado para avaliar e resolver o problema. Na sua opinião, quais seriam as ações a serem realizadas do momento em que o problema chegou ao seu conhecimento até a correção dele?
 
