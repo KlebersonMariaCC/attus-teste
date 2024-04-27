@@ -18,4 +18,4 @@ R: Primeiramente o importante é ouvir atentamente o erro descrito pelo usuário
 
 4 - Considere que você está trabalhando em uma implementação complexa, e estratégica para viabilizar uma entrega contratual, cujo prazo não pode ser repactuado, e durante a implementação atrasos ocorreram por conta de itens que não estavam claros na especificação, levando você a estimar um atraso de um dia na entrega prevista. Quais seriam suas considerações e encaminhamento nesse cenário?
 
-R:
+R: Isso tem que ser explicitamente conversado com seu superior, já que isso afeta toda uma questão contratual, é importante que ele tenha clareza do problema. Depois disso poderia sugerir uma solução onde poderiamos focar parte dopessoal na conclusão desse problema, porém traria artasos em outros projetos. OUtraopção seria levar esse assunto até com quem fala diretamente com os stakeholders e explicar que o motivo do atraso, que houve um descompasso entre oq foi pedido e o que foi entendido.
