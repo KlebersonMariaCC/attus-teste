@@ -3,22 +3,19 @@ package com.attus.teste03.controller;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.util.UriComponentsBuilder;
-
 import com.attus.teste03.DTO.PessoaDTO;
 import com.attus.teste03.Service.PessoaService;
 import com.attus.teste03.model.Pessoa;
 import com.attus.teste03.util.ErroPessoa;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+
 ;
 
 @RestController
@@ -48,7 +45,7 @@ public class PessoaController {
         Optional<Pessoa> optionalPessoa = pessoaService.getById(id);
 
         if(!optionalPessoa.isPresent()){
-            return ErroPessoa.erroPEssoaNaoCadastrada();
+            return ErroPessoa.erroPessoaNaoCadastrada();
         }
         
         Pessoa pessoa = optionalPessoa.get();
@@ -57,5 +54,16 @@ public class PessoaController {
 
         return new ResponseEntity<Pessoa>(pessoa, HttpStatus.OK);
     }
+    @GetMapping("pessoa/{id}")
+    public ResponseEntity<?> consultaPessoa(@PathVariable Long id) {
+        Optional<Pessoa> optionalPessoa = pessoaService.consultaPessoa(id);
+        if(!optionalPessoa.isPresent()){
+            return ErroPessoa.erroIdNaoEncontrado(id);
+        }
+        Pessoa pessoa = optionalPessoa.get();
+
+        return new ResponseEntity<Pessoa>(pessoa,HttpStatus.OK);
+    }
+    
 
 }

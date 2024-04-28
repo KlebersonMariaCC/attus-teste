@@ -1,15 +1,11 @@
 package com.attus.teste03.Service;
 
-import java.util.Date;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.datetime.DateFormatter;
 import org.springframework.stereotype.Service;
 
 import com.attus.teste03.DTO.PessoaDTO;
@@ -69,6 +65,11 @@ public class PessoaServiceImpl implements PessoaService{
 
         return pessoa;
         
+    }
+
+    @Override
+    public Optional<Pessoa> consultaPessoa(Long id) {
+        return pessoaRepository.findById(id);
     }
 
 }
