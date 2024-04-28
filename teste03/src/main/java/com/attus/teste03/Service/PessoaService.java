@@ -16,6 +16,6 @@ public interface PessoaService {
 
     Optional<Pessoa> getById(Long id);
 
-    Pessoa editarPessoa(Long id, Pessoa pessoa, PessoaDTO pessoaDTO);
+    Pessoa editarPessoa(Pessoa pessoa, PessoaDTO pessoaDTO);
 
 }

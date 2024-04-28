@@ -53,9 +53,9 @@ public class PessoaController {
         
         Pessoa pessoa = optionalPessoa.get();
         
-        Pessoa pessoaAtualizada = pessoaService.editarPessoa(id, pessoa, pessoaDTO);
+        pessoaService.editarPessoa(pessoa, pessoaDTO);
 
-        return new ResponseEntity<Pessoa>(pessoaAtualizada, HttpStatus.OK);
+        return new ResponseEntity<Pessoa>(pessoa, HttpStatus.OK);
     }
 
 }

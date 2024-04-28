@@ -12,4 +12,6 @@ public interface EnderecoService {
 
     List<Endereco> getEnderecos(List<EnderecoDTO> enderecos);
 
+    List<Endereco> updateEnderecos(List<EnderecoDTO> enderecos);
+
 }

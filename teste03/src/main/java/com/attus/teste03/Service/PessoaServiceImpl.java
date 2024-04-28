@@ -42,7 +42,7 @@ public class PessoaServiceImpl implements PessoaService{
         Long idEnderecoPrincipal = Long.valueOf(-1);
         LocalDate data = LocalDate.parse(pessoaDTO.getDataNascimento(), dateFormat);
         Pessoa pessoa = new Pessoa(pessoaDTO.getNome(),
-       data , enderecos,idEnderecoPrincipal);
+        data , enderecos,idEnderecoPrincipal);
 
        pessoaRepository.save(pessoa);
 
@@ -58,10 +58,11 @@ public class PessoaServiceImpl implements PessoaService{
     }
 
     @Override
-    public Pessoa editarPessoa(Long id, Pessoa pessoa, PessoaDTO pessoaDTO) {
+    public Pessoa editarPessoa( Pessoa pessoa, PessoaDTO pessoaDTO) {
         LocalDate data = LocalDate.parse(pessoaDTO.getDataNascimento(), dateFormat);
         pessoa.setNome(pessoaDTO.getNome());
-        pessoa.setEnderecos(enderecoService.getEnderecos(pessoaDTO.getEnderecos()));
+        List<Endereco> enderecos = enderecoService.updateEnderecos(pessoaDTO.getEnderecos());
+        pessoa.setEnderecos(enderecos);
         pessoa.setDataNascimento(data);
 
         pessoaRepository.save(pessoa);
