@@ -1,6 +1,7 @@
 package com.attus.teste03.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -17,5 +18,9 @@ public interface EnderecoService {
     List<Endereco> updateEnderecos(List<EnderecoDTO> enderecos);
 
     ResponseEntity<?> cadastraEndereco(Pessoa pessoa, EnderecoDTO enderecoDTO);
+
+    Optional<Endereco> getEndereco(Long id);
+
+    void atualizarEndereco(Endereco endereco, EnderecoDTO enderecoDTO);
 
 }

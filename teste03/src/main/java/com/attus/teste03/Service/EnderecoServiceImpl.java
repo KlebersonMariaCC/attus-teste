@@ -89,7 +89,7 @@ public class EnderecoServiceImpl implements EnderecoService{
         if (enderecoExiste.isPresent()) {
             Endereco endereco = enderecoExiste.get();
             if(pessoa.getEnderecos().contains(endereco)){
-                return ErroEndereco.erroPEssoaJaTemEndereco(pessoa.getId());
+                return ErroEndereco.erroPessoaJaTemEndereco(pessoa.getId());
             }
             pessoa.getEnderecos().add(endereco);
             pessoaRepository.save(pessoa);
@@ -104,4 +104,23 @@ public class EnderecoServiceImpl implements EnderecoService{
         }
         return new ResponseEntity<Pessoa>(pessoa,HttpStatus.CREATED);
     }
+
+    @Override
+    public Optional<Endereco> getEndereco(Long id) {
+       return enderecoRepository.findById(id);
+    }
+
+    @Override
+    public void atualizarEndereco(Endereco endereco, EnderecoDTO enderecoDTO) {
+       
+        endereco.setLogradouro(enderecoDTO.getLogradouro());
+                endereco.setCep(enderecoDTO.getCep());
+                endereco.setCidade(enderecoDTO.getCidade());
+                endereco.setEstado(enderecoDTO.getEstado());
+                endereco.setNumero(enderecoDTO.getNumero());
+        
+        enderecoRepository.save(endereco);
+
+    }
+
 }

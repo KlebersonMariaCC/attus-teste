@@ -3,6 +3,7 @@ package com.attus.teste03.controller;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -10,12 +11,18 @@ import org.springframework.web.bind.annotation.RestController;
 import com.attus.teste03.DTO.EnderecoDTO;
 import com.attus.teste03.Service.EnderecoService;
 import com.attus.teste03.Service.PessoaService;
+import com.attus.teste03.model.Endereco;
 import com.attus.teste03.model.Pessoa;
+import com.attus.teste03.util.ErroEndereco;
 import com.attus.teste03.util.ErroPessoa;
 
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+
+
 
 
 @RestController
@@ -41,6 +48,36 @@ public class EnderecoController {
         return pessoaAtualizada;
 
     }
+
+    @PutMapping("/endereco/{id}")
+    public ResponseEntity<?> atualizaEndereco(@PathVariable Long id, @RequestBody EnderecoDTO enderecoDTO) {
+        
+        Optional<Endereco> optionalEndereco = enderecoService.getEndereco(id);
+
+        if(!optionalEndereco.isPresent()){
+            return ErroEndereco.erroEnderecoNaoCadastrado(id);
+        }
+        Endereco endereco = optionalEndereco.get();
+
+        enderecoService.atualizarEndereco(endereco, enderecoDTO);
+
+        return new ResponseEntity<Endereco>(endereco,HttpStatus.OK);
+    }
+
+    @GetMapping("/endereco/{id}")
+    public ResponseEntity<?> consultarEnderecoPessoa(@PathVariable Long id) {
+            Optional<Endereco> optionalEndereco = enderecoService.getEndereco(id);
+
+            if (!optionalEndereco.isPresent()){
+                return ErroEndereco.erroEnderecoNaoCadastrado(id);
+            }
+            Endereco endereco = optionalEndereco.get();
+            
+            return new ResponseEntity<Endereco>(endereco, HttpStatus.OK);
+
+
+    }
+    
     
 
 
