@@ -29,7 +29,7 @@ public class PessoaController {
    @PostMapping("/pessoa")
     public ResponseEntity<?> cadastrarPessoa(@RequestBody PessoaDTO pessoaDTO){
 
-        Optional<Pessoa>  optionalPessoa = pessoaService.getByNome(pessoaDTO.getNome());
+        Optional<Pessoa>  optionalPessoa = pessoaService.pessoaExiste(pessoaDTO);
 
         if(optionalPessoa.isPresent()){
             return ErroPessoa.erroPessoaJaCadastrada();

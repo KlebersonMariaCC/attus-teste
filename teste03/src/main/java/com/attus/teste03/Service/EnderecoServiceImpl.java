@@ -30,22 +30,16 @@ public class EnderecoServiceImpl implements EnderecoService{
     public List<Endereco> getEnderecos(List<EnderecoDTO> enderecos) {
         List<Endereco> result = new ArrayList<Endereco>();
         for (EnderecoDTO enderecoDTO : enderecos) {
-            Optional<Endereco> enderecoExiste = enderecoRepository.findByLogradouroAndCepAndNumeroAndCidadeAndEstado(
-                enderecoDTO.getLogradouro(), enderecoDTO.getCep(), enderecoDTO.getNumero()
-                ,enderecoDTO.getCidade(),enderecoDTO.getEstado());
-            if (enderecoExiste.isPresent()) {
-                Endereco endereco = enderecoExiste.get();
-                result.add(endereco);
-            }else {
-                Endereco endereco = new Endereco(enderecoDTO.getLogradouro(), 
-                enderecoDTO.getCep(), enderecoDTO.getNumero(),
-                enderecoDTO.getCidade(),enderecoDTO.getEstado());
-                
-                result.add(endereco);
-                
-                enderecoRepository.save(endereco);
-            }
+           
+            Endereco endereco = new Endereco(enderecoDTO.getLogradouro(), 
+            enderecoDTO.getCep(), enderecoDTO.getNumero(),
+            enderecoDTO.getCidade(),enderecoDTO.getEstado());
             
+            Endereco enderecoSalvo = enderecoRepository.save(endereco);
+
+            result.add(enderecoSalvo);
+                
+                
         }
         return result;
 
@@ -56,27 +50,15 @@ public class EnderecoServiceImpl implements EnderecoService{
         List<Endereco> result = new ArrayList<Endereco>();
 
         for (EnderecoDTO enderecoDTO : enderecos) {
-
-            Optional<Endereco> enderecoExiste = enderecoRepository.findById(enderecoDTO.getId());
-            if (enderecoExiste.isPresent()) {
-                Endereco endereco = enderecoExiste.get();
-                endereco.setLogradouro(enderecoDTO.getLogradouro());
-                endereco.setCep(enderecoDTO.getCep());
-                endereco.setCidade(enderecoDTO.getCidade());
-                endereco.setEstado(enderecoDTO.getEstado());
-                endereco.setNumero(enderecoDTO.getNumero());
-
-                result.add(endereco);
-                enderecoRepository.save(endereco);
-
-            } else {
+            
                 Endereco endereco = new Endereco(enderecoDTO.getLogradouro(), 
                 enderecoDTO.getCep(), enderecoDTO.getNumero(),
                 enderecoDTO.getCidade(),enderecoDTO.getEstado());
 
-                result.add(endereco);
-                enderecoRepository.save(endereco);
-            }   
+                Endereco enderecoSalvo = enderecoRepository.save(endereco);
+
+                result.add(enderecoSalvo);
+               
         }
         return result;
     }

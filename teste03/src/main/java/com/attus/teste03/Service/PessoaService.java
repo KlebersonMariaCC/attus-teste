@@ -8,7 +8,6 @@ import com.attus.teste03.model.Pessoa;
 
 public interface PessoaService {
 
-    Optional<Pessoa> getByNome(String nome);
 
     Pessoa cadastraPessoa(PessoaDTO pessoaDTO);
 
@@ -17,6 +16,8 @@ public interface PessoaService {
     Pessoa editarPessoa(Pessoa pessoa, PessoaDTO pessoaDTO);
 
     Optional<Pessoa> consultaPessoa(Long id);
+
+    Optional<Pessoa> pessoaExiste(PessoaDTO pessoaDTO);
 
     
 }
