@@ -1,4 +1,4 @@
-package com.attus.teste03.Service;
+package com.attus.teste03.service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -103,6 +103,11 @@ public class EnderecoServiceImpl implements EnderecoService{
         
         enderecoRepository.save(endereco);
 
+    }
+
+    @Override
+    public List<Endereco> consultaEnderecos() {
+        return enderecoRepository.findAll();
     }
 
 }

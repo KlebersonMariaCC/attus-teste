@@ -1,5 +1,6 @@
-package com.attus.teste03.Service;
+package com.attus.teste03.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import com.attus.teste03.DTO.PessoaDTO;
@@ -18,6 +19,10 @@ public interface PessoaService {
     Optional<Pessoa> consultaPessoa(Long id);
 
     Optional<Pessoa> pessoaExiste(PessoaDTO pessoaDTO);
+
+    Pessoa setEnderecoPrincipal(Pessoa pessoa, Long idEndereco);
+
+    List<Pessoa> consultaPessoas();
 
     
 }

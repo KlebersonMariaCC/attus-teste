@@ -1,5 +1,6 @@
 package com.attus.teste03.controller;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,10 +10,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.attus.teste03.DTO.EnderecoDTO;
-import com.attus.teste03.Service.EnderecoService;
-import com.attus.teste03.Service.PessoaService;
 import com.attus.teste03.model.Endereco;
 import com.attus.teste03.model.Pessoa;
+import com.attus.teste03.service.EnderecoService;
+import com.attus.teste03.service.PessoaService;
 import com.attus.teste03.util.ErroEndereco;
 import com.attus.teste03.util.ErroPessoa;
 
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+
 
 
 
@@ -65,7 +67,7 @@ public class EnderecoController {
     }
 
     @GetMapping("/endereco/{id}")
-    public ResponseEntity<?> consultarEnderecoPessoa(@PathVariable Long id) {
+    public ResponseEntity<?> consultarEndereco(@PathVariable Long id) {
             Optional<Endereco> optionalEndereco = enderecoService.getEndereco(id);
 
             if (!optionalEndereco.isPresent()){
@@ -77,6 +79,16 @@ public class EnderecoController {
 
 
     }
+
+    @GetMapping("/enderecos")
+    public ResponseEntity<?> consultarEnderecos() {
+        List<Endereco> enderecos = enderecoService.consultaEnderecos();
+        if(enderecos.isEmpty()){
+            return ErroEndereco.erroNenhumEnderecoCadastrado();
+        }
+        return new ResponseEntity<List<Endereco>>(enderecos,HttpStatus.OK);
+    }
+    
     
     
 

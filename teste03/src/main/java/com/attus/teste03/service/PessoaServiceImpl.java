@@ -1,4 +1,4 @@
-package com.attus.teste03.Service;
+package com.attus.teste03.service;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -58,9 +58,9 @@ public class PessoaServiceImpl implements PessoaService{
         pessoa.setEnderecos(enderecos);
         pessoa.setDataNascimento(data);
 
-        pessoaRepository.save(pessoa);
+        return pessoaRepository.save(pessoa);
 
-        return pessoa;
+        
         
     }
 
@@ -76,6 +76,18 @@ public class PessoaServiceImpl implements PessoaService{
         return pessoaRepository.findByNomeAndDataNascimento(
             pessoaDTO.getNome(),data
         );
+    }
+
+    @Override
+    public Pessoa setEnderecoPrincipal(Pessoa pessoa, Long idEndereco) {
+        pessoa.setIdEnderecoPrncipal(idEndereco);
+        return pessoaRepository.save(pessoa);
+        
+    }
+
+    @Override
+    public List<Pessoa> consultaPessoas() {
+        return pessoaRepository.findAll();
     }
 
 }

@@ -1,4 +1,4 @@
-package com.attus.teste03.Service;
+package com.attus.teste03.service;
 
 import java.util.List;
 import java.util.Optional;
@@ -22,5 +22,7 @@ public interface EnderecoService {
     Optional<Endereco> getEndereco(Long id);
 
     void atualizarEndereco(Endereco endereco, EnderecoDTO enderecoDTO);
+
+    List<Endereco> consultaEnderecos();
 
 }
