@@ -79,8 +79,14 @@ public class PessoaController {
             return ErroPessoa.erroIdNaoEncontrado(id);
         }
         Pessoa pessoa = optionalPessoa.get();
+
+        List<Endereco> enderecos =  pessoa.getEnderecos();
+
+        if (enderecos.isEmpty()) {
+             return ErroEndereco.erroNenhumEnderecoCadastrado();
+        }
         
-        return new ResponseEntity<List<Endereco>>(pessoa.getEnderecos(),HttpStatus.OK);
+        return new ResponseEntity<List<Endereco>>(enderecos,HttpStatus.OK);
     }
 
     @PostMapping("/pessoa/{idPessoa}/endereco/principal")

@@ -31,7 +31,7 @@ public class PessoaServiceImpl implements PessoaService{
 
         
 
-        List<Endereco> enderecos = enderecoService.getEnderecos(pessoaDTO.getEnderecos());
+        List<Endereco> enderecos = enderecoService.cadastraEnderecos(pessoaDTO.getEnderecos());
         Long idEnderecoPrincipal = -1L;
         LocalDate data = LocalDate.parse(pessoaDTO.getDataNascimento(), dateFormat);
         Pessoa pessoa = new Pessoa(pessoaDTO.getNome(),

@@ -13,7 +13,7 @@ import com.attus.teste03.model.Pessoa;
 @Service
 public interface EnderecoService {
 
-    List<Endereco> getEnderecos(List<EnderecoDTO> enderecos);
+    //List<Endereco> getEnderecos(List<EnderecoDTO> enderecos);
 
     List<Endereco> updateEnderecos(List<EnderecoDTO> enderecos);
 
@@ -24,5 +24,7 @@ public interface EnderecoService {
     void atualizarEndereco(Endereco endereco, EnderecoDTO enderecoDTO);
 
     List<Endereco> consultaEnderecos();
+
+    List<Endereco> cadastraEnderecos(List<EnderecoDTO> enderecos);
 
 }

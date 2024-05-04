@@ -27,7 +27,7 @@ public class EnderecoServiceImpl implements EnderecoService{
 
 
     @Override
-    public List<Endereco> getEnderecos(List<EnderecoDTO> enderecos) {
+    public List<Endereco>cadastraEnderecos(List<EnderecoDTO> enderecos) {
         List<Endereco> result = new ArrayList<Endereco>();
         for (EnderecoDTO enderecoDTO : enderecos) {
            
@@ -54,6 +54,7 @@ public class EnderecoServiceImpl implements EnderecoService{
                 Endereco endereco = new Endereco(enderecoDTO.getLogradouro(), 
                 enderecoDTO.getCep(), enderecoDTO.getNumero(),
                 enderecoDTO.getCidade(),enderecoDTO.getEstado());
+                
 
                 Endereco enderecoSalvo = enderecoRepository.save(endereco);
 

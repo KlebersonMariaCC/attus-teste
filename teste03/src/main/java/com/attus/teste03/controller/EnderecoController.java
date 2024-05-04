@@ -45,9 +45,9 @@ public class EnderecoController {
         }
         Pessoa pessoa = optionalPessoa.get();
         
-        ResponseEntity<?> pessoaAtualizada = enderecoService.cadastraEndereco(pessoa, enderecoDTO);
+        return  enderecoService.cadastraEndereco(pessoa, enderecoDTO);
 
-        return pessoaAtualizada;
+        
 
     }
 
