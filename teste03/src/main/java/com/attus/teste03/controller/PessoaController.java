@@ -94,6 +94,7 @@ public class PessoaController {
         if(!optionalEndereco.isPresent()){
             return ErroEndereco.erroPessoaNaoTemEndereco(pessoa.getId(),idEndereco);
         }
+        
         Pessoa pessoaAlterada = pessoaService.setEnderecoPrincipal(pessoa, idEndereco);
         
         return new ResponseEntity<Pessoa>(pessoaAlterada,HttpStatus.OK);
@@ -106,7 +107,7 @@ public class PessoaController {
             return ErroPessoa.erroIdNaoEncontrado(idPessoa);
         }
         Pessoa pessoa = optionalPessoa.get();
-         if (pessoa.getIdEnderecoPrncipal() <=0){
+        if (pessoa.getIdEnderecoPrincipal() <=0){
             return ErroEndereco.erroPessoaNaoEscolheuEndereco(idPessoa);
         }
         Endereco endereco = enderecoService.getEndereco(idPessoa).get();

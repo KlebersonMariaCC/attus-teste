@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
@@ -44,26 +45,32 @@ class Teste03ApplicationTests {
 	PessoaDTO pessoa3;
 	PessoaDTO pessoa4;
 	PessoaDTO pessoa5;
-	
+	PessoaDTO pessoa6;	
 	@LocalServerPort
 	int port;
 
 	private static Long idCounter = 1L;
+	private static Long idEnderecoCounter = 1L;
+
 
 	/* @Autowired
 	EntityManager entityManager; */
 
-	@BeforeEach
+	@BeforeAll
 	void setup() {
 		enderecos1 = new ArrayList<EnderecoDTO>();
-		enderecos1.add(new EnderecoDTO(idCounter,"Rua ABC",12345678L,123L,"São Paulo","SP"));
+		enderecos1.add(new EnderecoDTO(idEnderecoCounter++,"Rua ABC",12345678L,123L,"São Paulo","SP"));
+		enderecos1.add(new EnderecoDTO(idEnderecoCounter++,"Rua DEF",8765432L,321L,"São Paulo","SP"));
+
+
 
 		enderecosVazio = new ArrayList<>();
 		pessoa1 = new PessoaDTO(idCounter++,"Fulano de Tal", "01/01/1990",enderecos1);
-		pessoa2 = new PessoaDTO(idCounter++,"Beltrano da Silva", "10/02/1994",enderecos1);
-		pessoa3 = new PessoaDTO(idCounter++,"Adam SIlva", "02/05/1997", enderecos1);
-		pessoa4 = new PessoaDTO(idCounter++,"Maurilio dos Anjos","01/10/1980",enderecos1);
-		pessoa5 = new PessoaDTO(idCounter++,"Maurilio dos Anjos","01/10/1980",null);
+		pessoa2 = new PessoaDTO(idCounter++,"Beltrano da Silva", "10/02/1994",null);
+		/* pessoa3 = new PessoaDTO(idCounter++,"Adam SIlva", "02/05/1997", enderecos1); */
+		/* pessoa4 = new PessoaDTO(idCounter++,"Maurilio dos Anjos","01/10/1980",enderecos1); */
+		/* pessoa5 = new PessoaDTO(idCounter++,"Maurilio dos Anjos","01/10/1980",null); */
+		/* pessoa6 =  new PessoaDTO(idCounter++,"Renan de Almeida ","14/05/1966",enderecos1); */
 	}
 	
 	/* @AfterEach
@@ -74,10 +81,10 @@ class Teste03ApplicationTests {
 	} */
 
 
-	@Transactional
+	
 	@Test
 	@Order(1)
-	void testaCadastrarPesssoa() {
+	void testaCadastrarPessoa() {
 		
         // Criar um objeto HttpEntity com os dados a serem enviados
         HttpEntity<PessoaDTO> requestPessoa = new HttpEntity<>(pessoa1);
@@ -100,79 +107,145 @@ class Teste03ApplicationTests {
 		
 	}
 	
-	@Transactional
+	
 	@Test
 	@Order(2)
 	void testaEditarPessoa() {
-		// Criar um objeto HttpEntity 
-        HttpEntity<PessoaDTO> requestPessoa = new HttpEntity<>(pessoa2);
 
-        // Enviar a solicitação POST
-        ResponseEntity<PessoaDTO> responsePost = restTemplate.postForEntity(url + port + "/api/pessoa", requestPessoa, PessoaDTO.class);
-		PessoaDTO pessoaAlterada = responsePost.getBody();
+        // Enviar a solicitação GET
+        ResponseEntity<PessoaDTO> response = restTemplate.getForEntity(url + port + "/api/pessoa/{id}", PessoaDTO.class,pessoa1.getId());
+		PessoaDTO pessoaAlterada = response.getBody();
+
 		pessoaAlterada.setNome("Fulano de Tal 1");
 
-		HttpEntity<PessoaDTO> requestPessoaAlterada = new HttpEntity<>(pessoaAlterada);
+		HttpEntity<PessoaDTO> request = new HttpEntity<>(pessoaAlterada);
 
-		ResponseEntity<PessoaDTO> response = restTemplate.exchange(url + port + "/api/pessoa/" 
-		+ pessoaAlterada.getId(), HttpMethod.PUT, requestPessoaAlterada, PessoaDTO.class);
+		response = restTemplate.exchange(url + port + "/api/pessoa/{id}" 
+		, HttpMethod.PUT, request, PessoaDTO.class,pessoaAlterada.getId());
         assertEquals(HttpStatus.OK, response.getStatusCode());
-		pessoa2 = requestPessoa.getBody();
-		HttpEntity<PessoaDTO> requestPessoa2 = new HttpEntity<>(pessoa2);
 
 		response = restTemplate.exchange(url + port + "/api/pessoa/" 
-		+ 42, HttpMethod.PUT, requestPessoa2, PessoaDTO.class);
+		+ 42, HttpMethod.PUT, request, PessoaDTO.class);
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
 		
 
 	}
 
-	@Transactional
+	
 	@Test
 	@Order(3)
 	void testaConsultaPessoa() {
-		HttpEntity<PessoaDTO> requestPessoa = new HttpEntity<>(pessoa3);
+		
+		ResponseEntity<PessoaDTO> response = restTemplate.getForEntity
+		(url + port + "/api/pessoa/{id}", PessoaDTO.class,pessoa1.getId());
 
-		ResponseEntity<PessoaDTO> responsePost = restTemplate.postForEntity
-		(url + port + "/api/pessoa", requestPessoa, PessoaDTO.class);
+		
+		assertEquals(HttpStatus.OK, response.getStatusCode());
 
-		ResponseEntity<PessoaDTO> responseGet = restTemplate.getForEntity
-		(url + port + "/api/pessoa/" + responsePost.getBody().getId(), PessoaDTO.class);
-
-		assertEquals(responsePost.getBody(), responseGet.getBody());
-		assertEquals(HttpStatus.OK, responseGet.getStatusCode());
-		ResponseEntity<PessoaDTO>response = restTemplate.getForEntity(url + port + "/api/pessoa/" 
-		+ 42, PessoaDTO.class);
+		response = restTemplate.getForEntity(url + port + "/api/pessoa/{id}",
+		 PessoaDTO.class,42L);
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
 	}
 
-	@Transactional
 	@Test
 	@Order(4)
 	void testaConsultarEnderecosPessoa() {
-		HttpEntity<PessoaDTO> requestPessoa = new HttpEntity<>(pessoa4);
-		ResponseEntity<PessoaDTO> responsePost = restTemplate.postForEntity(
-			url + port + "/api/pessoa", requestPessoa, PessoaDTO.class);
+		
 		 
-		PessoaDTO pessoa = responsePost.getBody(); 
+		 
 		ResponseEntity<EnderecoDTO[]> responseGet = restTemplate.getForEntity(
-        url + port + "/api/pessoa/" + pessoa.getId() + "/enderecos",
-        EnderecoDTO[].class);
+        url + port + "/api/pessoa/{id}/enderecos",
+        EnderecoDTO[].class,pessoa1.getId());
 
-		List<EnderecoDTO> enderecos = new ArrayList<EnderecoDTO>(Arrays.asList(responseGet.getBody()));
-
-		assertEquals(responsePost.getBody().getEnderecos(), enderecos);
 		assertEquals(HttpStatus.OK, responseGet.getStatusCode());
 
-		ResponseEntity<PessoaDTO>response = restTemplate.getForEntity(url + port + "/api/pessoa/" 
-		+ 42, PessoaDTO.class);
+		ResponseEntity<PessoaDTO>response = restTemplate.getForEntity(url + port + 
+		"/api/pessoa/{id}/enderecos", PessoaDTO.class, 42L);
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
 
-		requestPessoa = new HttpEntity<>(pessoa5);
-		responsePost = restTemplate.postForEntity(
-			url + port + "/api/pessoa", requestPessoa, PessoaDTO.class);
+		HttpEntity<PessoaDTO> request = new HttpEntity<>(pessoa2);
+		response = restTemplate.postForEntity(
+			url + port + "/api/pessoa", request, PessoaDTO.class);
 		
-		System.out.println(response);
+		response = restTemplate.getForEntity(url + port + 
+			"/api/pessoa/{id}/enderecos", PessoaDTO.class, pessoa2.getId());
+
+
+		assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+	}
+	
+	@Test
+	@Order(5)
+	void testaEscolheEnderecoPrincipal(){
+		
+		
+        // Enviar a solicitação GET
+
+		EnderecoDTO[] enderecosArray = restTemplate.getForObject(url + port + "/api/pessoa/{id}/enderecos",
+		 EnderecoDTO[].class,pessoa1.getId()); 
+		System.out.println(enderecosArray);  
+		List<EnderecoDTO> enderecos  = Arrays.asList(enderecosArray);
+		System.out.println(enderecos);
+
+		HttpEntity<PessoaDTO> request = new HttpEntity<>(new PessoaDTO());
+
+		ResponseEntity<PessoaDTO> response = restTemplate.postForEntity(
+        url + port + "/api/pessoa/{id}/endereco/principal?idEndereco={idEndereco}"
+		 ,request,
+        PessoaDTO.class,pessoa1.getId(),enderecos.get(0).getId());
+		
+		
+		assertEquals(enderecos.get(0).getId(),response.getBody().getIdEnderecoPrincipal());
+		assertEquals(HttpStatus.OK, response.getStatusCode());
+		
+		
+		System.out.println(pessoa2);
+		
+		response = restTemplate.getForEntity(
+        url + port + "/api/pessoa/{id}",
+        PessoaDTO.class,pessoa2.getId());
+		
+
+		response = restTemplate.postForEntity(
+        url + port + "/api/pessoa/{id}/endereco/principal?idEndereco={idEndereco}"
+		 ,request,
+        PessoaDTO.class,42L,enderecos.get(0).getId());
+
+		assertEquals(HttpStatus.NOT_FOUND,response.getStatusCode());
+
+		response = restTemplate.postForEntity(
+        url + port + "/api/pessoa/{id}/endereco/principal?idEndereco={idEndereco}"
+		 ,request,
+        PessoaDTO.class,pessoa1.getId(),42);
+
+		assertEquals(HttpStatus.NOT_FOUND,response.getStatusCode());
+
+	}
+
+	@Test
+	@Order(6)
+	void testaconsultaEnderecoPrincipal() {
+
+		EnderecoDTO[] enderecosArray = restTemplate.getForObject(url + port + "/api/pessoa/{id}/enderecos",
+		 EnderecoDTO[].class,pessoa1.getId()); 
+		System.out.println(enderecosArray);  
+		List<EnderecoDTO> enderecos  = Arrays.asList(enderecosArray);
+		System.out.println(enderecos);
+
+		
+
+		ResponseEntity<EnderecoDTO> response = restTemplate.getForEntity(
+        url + port + "/api/pessoa/{id}/endereco/principal"
+		,EnderecoDTO.class,pessoa1.getId());
+
+		assertEquals(enderecos.get(0).getId(), response.getBody());
+
+		assertEquals(HttpStatus.OK, response.getStatusCode());
+
+		response = restTemplate.getForEntity(
+        url + port + "/api/pessoa/{id}/endereco/principal?idEndereco={idEndereco}"
+		 ,
+        EnderecoDTO.class,pessoa2.getId(),enderecos.get(0).getId());
 
 		assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
 	}

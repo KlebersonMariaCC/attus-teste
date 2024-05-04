@@ -12,12 +12,14 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @Entity
 @NoArgsConstructor
+@AllArgsConstructor
 public class Pessoa {
 
     @Id
@@ -32,13 +34,13 @@ public class Pessoa {
     @OneToMany
     List<Endereco> enderecos;
 
-    Long IdEnderecoPrncipal;
+    Long idEnderecoPrincipal;
 
-    public Pessoa(String nome, LocalDate dataNascimento, List<Endereco> enderecos, Long idEnderecoPrncipal) {
+    public Pessoa(String nome, LocalDate dataNascimento, List<Endereco> enderecos, Long idEnderecoPrincipal) {
         this.nome = nome;
         this.dataNascimento = dataNascimento;
         this.enderecos = enderecos;
-        IdEnderecoPrncipal = idEnderecoPrncipal;
+        this.idEnderecoPrincipal = idEnderecoPrincipal;
     }
 
     

@@ -37,9 +37,9 @@ public class PessoaServiceImpl implements PessoaService{
         Pessoa pessoa = new Pessoa(pessoaDTO.getNome(),
         data , enderecos,idEnderecoPrincipal);
 
-       pessoaRepository.save(pessoa);
+       return pessoaRepository.save(pessoa);
 
-       return pessoa;
+       
         
         
 
@@ -80,7 +80,7 @@ public class PessoaServiceImpl implements PessoaService{
 
     @Override
     public Pessoa setEnderecoPrincipal(Pessoa pessoa, Long idEndereco) {
-        pessoa.setIdEnderecoPrncipal(idEndereco);
+        pessoa.setIdEnderecoPrincipal(idEndereco);
         return pessoaRepository.save(pessoa);
         
     }
